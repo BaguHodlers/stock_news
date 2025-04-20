@@ -2,7 +2,7 @@ version: '3'
 
 services:
   newsnow:
-    image: ghcr.io/ourongxing/newsnow:latest
+    image: newsnow:latest
     container_name: newsnow
     restart: always
     ports:
@@ -10,6 +10,7 @@ services:
     environment:
       - G_CLIENT_ID=
       - G_CLIENT_SECRET=
-      - JWT_SECRET=
+      - JWT_SECRET=newsnow_development
       - INIT_TABLE=true
       - ENABLE_CACHE=true
+      - DISABLE_LOGIN=true
