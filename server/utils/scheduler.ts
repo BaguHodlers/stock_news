@@ -11,7 +11,11 @@ const SCHEDULE_INTERVAL = process.env.SCHEDULE_INTERVAL
   : 60 * 1000
 
 // 用于去重的 Redis 客户端（与 cache.ts 复用配置）
-const redisClient = new Redis({ host: "localhost", port: 6379, db: 1 })
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST || "localhost",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  db: Number(process.env.REDIS_DB) || 1,
+})
 
 export async function scheduleFetchAll() {
   try {

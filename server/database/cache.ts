@@ -3,8 +3,18 @@ import type { NewsItem } from "@shared/types"
 import type { CacheInfo } from "../types"
 import { logger } from "#/utils/logger"
 
-// Initialize Redis client pointing to localhost:6379 DB 1
-const redisClient = new Redis({ host: "localhost", port: 6379, db: 1 })
+// Initialize Redis client using environment variables or defaults
+const redisClient = new Redis({
+  host: process.env.REDIS_HOST || "localhost",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  db: Number(process.env.REDIS_DB) || 1,
+})
+
+// Log Redis connection status
+redisClient.on("connect", () => logger.success("Redis client connected"))
+redisClient.on("error", err => logger.error("Redis client error", err))
+
+export { redisClient }
 
 export class Cache {
   private client: Redis

@@ -1,11 +1,15 @@
 import { SCHEDULE_INTERVAL, scheduleFetchAll } from "#/utils/scheduler"
 import { logger } from "#/utils/logger"
 
-logger.info("Scheduler plugin loaded and scheduler started.")
+logger.success("Scheduler plugin loaded and scheduler started.")
 
-// 立即执行一次
+// 立即执行一次并记录日志
+logger.success("Scheduler: running initial fetch")
 scheduleFetchAll()
 // 定时执行
-setInterval(scheduleFetchAll, SCHEDULE_INTERVAL)
+setInterval(() => {
+  logger.success("Scheduler: running scheduled fetch")
+  scheduleFetchAll()
+}, SCHEDULE_INTERVAL)
 
 export default () => {}

@@ -2,8 +2,11 @@ version: '3'
 
 services:
   newsnow:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: newsnow:latest
-    container_name: newsnow
+    container_name: newsnow-server
     restart: always
     ports:
       - '8002:4444'
@@ -18,3 +21,15 @@ services:
       - INIT_TABLE=true
       - ENABLE_CACHE=true
       - DISABLE_LOGIN=true
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+  redis:
+    image: redis:latest
+    container_name: newsnow-redis
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+volumes:
+  redis_data:
