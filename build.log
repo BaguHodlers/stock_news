@@ -1,0 +1,102 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon    8.2MB
+Step 1/12 : FROM node:20.12.2-alpine as builder
+ ---> 13617ec9193b
+Step 2/12 : WORKDIR /usr/src
+ ---> Using cache
+ ---> 0d7cc33f00c0
+Step 3/12 : COPY . .
+ ---> 9df51b6b2a2e
+Step 4/12 : RUN corepack enable
+ ---> Running in a555e371426e
+ ---> Removed intermediate container a555e371426e
+ ---> c7af7d135403
+Step 5/12 : RUN pnpm install
+ ---> Running in 7f7477b7bc55
+[91mCorepack is about to download https://registry.npmjs.org/pnpm/-/pnpm-10.5.2.tgz.
+[0mLockfile is up to date, resolution step is skipped
+Progress: resolved 1, reused 0, downloaded 0, added 0
+Packages: +1202
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 1202, reused 0, downloaded 0, added 0
+
+   ╭──────────────────────────────────────────────────────────────────╮
+   │                                                                  │
+   │                Update available! 10.5.2 → 10.8.1.                │
+   │   Changelog: https://github.com/pnpm/pnpm/releases/tag/v10.8.1   │
+   │            Run "corepack use pnpm@10.8.1" to update.             │
+   │                                                                  │
+   ╰──────────────────────────────────────────────────────────────────╯
+
+Progress: resolved 1202, reused 0, downloaded 12, added 12
+Progress: resolved 1202, reused 0, downloaded 50, added 50
+Progress: resolved 1202, reused 0, downloaded 102, added 102
+Progress: resolved 1202, reused 0, downloaded 142, added 141
+Progress: resolved 1202, reused 0, downloaded 182, added 182
+Progress: resolved 1202, reused 0, downloaded 237, added 237
+Progress: resolved 1202, reused 0, downloaded 279, added 279
+Progress: resolved 1202, reused 0, downloaded 310, added 309
+Progress: resolved 1202, reused 0, downloaded 343, added 343
+Progress: resolved 1202, reused 0, downloaded 383, added 383
+Progress: resolved 1202, reused 0, downloaded 419, added 417
+Progress: resolved 1202, reused 0, downloaded 461, added 461
+Progress: resolved 1202, reused 0, downloaded 488, added 488
+Progress: resolved 1202, reused 0, downloaded 516, added 517
+Progress: resolved 1202, reused 0, downloaded 543, added 544
+Progress: resolved 1202, reused 0, downloaded 583, added 584
+Progress: resolved 1202, reused 0, downloaded 626, added 627
+Progress: resolved 1202, reused 0, downloaded 663, added 664
+Progress: resolved 1202, reused 0, downloaded 686, added 687
+Progress: resolved 1202, reused 0, downloaded 712, added 713
+Progress: resolved 1202, reused 0, downloaded 744, added 745
+Progress: resolved 1202, reused 0, downloaded 777, added 777
+Progress: resolved 1202, reused 0, downloaded 812, added 815
+Progress: resolved 1202, reused 0, downloaded 845, added 848
+Progress: resolved 1202, reused 0, downloaded 875, added 878
+Progress: resolved 1202, reused 0, downloaded 904, added 907
+Progress: resolved 1202, reused 0, downloaded 926, added 929
+Progress: resolved 1202, reused 0, downloaded 952, added 955
+Progress: resolved 1202, reused 0, downloaded 981, added 984
+Progress: resolved 1202, reused 0, downloaded 1016, added 1019
+Progress: resolved 1202, reused 0, downloaded 1043, added 1046
+Progress: resolved 1202, reused 0, downloaded 1075, added 1078
+Progress: resolved 1202, reused 0, downloaded 1097, added 1100
+Progress: resolved 1202, reused 0, downloaded 1112, added 1115
+Progress: resolved 1202, reused 0, downloaded 1130, added 1133
+Progress: resolved 1202, reused 0, downloaded 1150, added 1153
+Progress: resolved 1202, reused 0, downloaded 1180, added 1183
+Progress: resolved 1202, reused 0, downloaded 1191, added 1194
+Progress: resolved 1202, reused 0, downloaded 1194, added 1197
+Progress: resolved 1202, reused 0, downloaded 1195, added 1198
+Progress: resolved 1202, reused 0, downloaded 1196, added 1198
+Progress: resolved 1202, reused 0, downloaded 1197, added 1200
+Progress: resolved 1202, reused 0, downloaded 1198, added 1201
+Progress: resolved 1202, reused 0, downloaded 1199, added 1201
+Progress: resolved 1202, reused 0, downloaded 1199, added 1202, done
+.../node_modules/@napi-rs/pinyin postinstall$ node postinstall.js
+.../node_modules/@swc/core postinstall$ node postinstall.js
+.../node_modules/better-sqlite3 install$ prebuild-install || node-gyp rebuild --release
+.../esbuild@0.25.0/node_modules/esbuild postinstall$ node install.js
+.../node_modules/simple-git-hooks postinstall$ node ./postinstall.js
+.../node_modules/@napi-rs/pinyin postinstall: Done
+.../node_modules/@swc/core postinstall: Done
+.../node_modules/simple-git-hooks postinstall: [INFO] Successfully set the pre-commit with command: npx lint-staged
+.../esbuild@0.24.2/node_modules/esbuild postinstall$ node install.js
+.../node_modules/@parcel/watcher install$ node scripts/build-from-source.js
+.../node_modules/simple-git-hooks postinstall: Done
+.../esbuild@0.25.0/node_modules/esbuild postinstall: Done
+.../esbuild@0.17.19/node_modules/esbuild postinstall$ node install.js
+.../esbuild@0.24.2/node_modules/esbuild postinstall: Done
+.../node_modules/@parcel/watcher install: Done
+.../node_modules/workerd postinstall$ node install.js
+.../esbuild@0.17.19/node_modules/esbuild postinstall: Done
+.../sharp@0.33.5/node_modules/sharp install$ node install/check
+.../node_modules/workerd postinstall: [workerd] Failed to validate workerd binary
+.../node_modules/workerd postinstall: Local development will not work. This usually means you're on an unsupported
+.../node_modules/workerd postinstall: operating system, or missing some shared libraries. On Debian-based systems,
+.../node_modules/workerd postinstall: make sure you've installed the `libc++1` package.
+.../node_modules/workerd postinstall: Done
+.../sharp@0.33.5/node_modules/sharp install: Done

@@ -17,16 +17,20 @@ export default defineEventHandler(async (event): Promise<SourceResponse> => {
     }
 
     const cacheTable = await getCacheTable()
+    logger.success(`API /api/s: cacheTable is ${cacheTable ? "available" : "unavailable"}`)
     // Date.now() in Cloudflare Worker will not update throughout the entire runtime.
     const now = Date.now()
     let cache: CacheInfo | undefined
     if (cacheTable) {
       cache = await cacheTable.get(id)
+      logger.success(`API /api/s: get cache for ${id} -> ${cache ? "hit" : "miss"}`)
       if (cache) {
-      // if (cache) {
+        logger.success(`API /api/s: cache.updated=${cache.updated}, TTL=${TTL}, latest flag=${latest}`)
+        // if (cache) {
         // interval 刷新间隔，对于缓存失效也要执行的。本质上表示本来内容更新就很慢，这个间隔内可能内容压根不会更新。
         // 默认 10 分钟，是低于 TTL 的，但部分 Source 的更新间隔会超过 TTL，甚至有的一天更新一次。
         if (now - cache.updated < sources[id].interval) {
+          logger.success(`API /api/s: returning SUCCESS from cache for ${id}`)
           return {
             status: "success",
             id,
@@ -44,6 +48,7 @@ export default defineEventHandler(async (event): Promise<SourceResponse> => {
           // 没有 latest
           // 有 latest，服务器可以登录但没有登录
           if (!latest || (!event.context.disabledLogin && !event.context.user)) {
+            logger.success(`API /api/s: returning CACHE for ${id}`)
             return {
               status: "cache",
               id,
@@ -56,10 +61,13 @@ export default defineEventHandler(async (event): Promise<SourceResponse> => {
     }
 
     try {
+      logger.success(`API /api/s: fetching new data for ${id}`)
       const newData = (await getters[id]()).slice(0, 30)
+      logger.success(`API /api/s: fetched ${newData.length} items for ${id}`)
       if (cacheTable && newData.length) {
         if (event.context.waitUntil) event.context.waitUntil(cacheTable.set(id, newData))
         else await cacheTable.set(id, newData)
+        logger.success(`API /api/s: cache updated for ${id}`)
       }
       logger.success(`fetch ${id} latest`)
       return {

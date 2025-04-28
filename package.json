@@ -22,7 +22,10 @@
     "release": "bumpp",
     "prepare": "simple-git-hooks",
     "log": "wrangler pages deployment tail --project-name newsnow",
-    "test": "vitest -c vitest.config.ts"
+    "test": "vitest -c vitest.config.ts",
+    "fetch-latest": "bash scripts/fetch-latest.sh",
+    "test-history": "node scripts/test-history.js",
+    "dev:cache": "cross-env INIT_TABLE=true ENABLE_CACHE=true npm run dev"
   },
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^1.5.0",
@@ -47,6 +50,7 @@
     "framer-motion": "^12.4.7",
     "h3": "^1.15.1",
     "iconv-lite": "^0.6.3",
+    "ioredis": "^5.6.1",
     "jose": "^6.0.8",
     "jotai": "^2.12.1",
     "md5": "^2.3.0",
@@ -70,6 +74,7 @@
     "@tanstack/router-devtools": "^1.112.0",
     "@tanstack/router-plugin": "^1.112.0",
     "@types/md5": "^2.3.5",
+    "@types/node": "^22.15.2",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@unocss/rule-utils": "^66.0.0",

@@ -1,5 +1,4 @@
 import type { SourceID } from "@shared/types"
-import type { H3Event } from "h3"
 import { defineEventHandler, readBody } from "h3"
 import { z } from "zod"
 import { sources } from "@shared/sources"
@@ -11,7 +10,7 @@ const querySchema = z.object({
   sourceIds: z.array(z.string()).optional(), // 可选的新闻源过滤
 })
 
-export default defineEventHandler(async (event: H3Event) => {
+export default defineEventHandler(async (event: any) => {
   try {
     const query = await readBody(event)
     const { minutes, sourceIds } = querySchema.parse(query)
@@ -24,7 +23,12 @@ export default defineEventHandler(async (event: H3Event) => {
       throw new Error("Cache table not initialized")
     }
 
-    const targetSourceIds = (sourceIds?.filter(id => id in sources) as SourceID[]) || (Object.keys(sources) as SourceID[])
+    let targetSourceIds: SourceID[]
+    if (Array.isArray(sourceIds) && sourceIds.length > 0) {
+      targetSourceIds = sourceIds.filter((id: string) => id in sources) as SourceID[]
+    } else {
+      targetSourceIds = Object.keys(sources) as SourceID[]
+    }
 
     const caches = await cacheTable.getEntire(targetSourceIds)
 
@@ -48,13 +52,21 @@ export default defineEventHandler(async (event: H3Event) => {
       return dateB - dateA
     })
 
+    // Map to desired output fields: title, inserted time, channel name, and url
+    const resultItems = sortedNews.map(item => ({
+      title: item.title,
+      insertedAt: item.cacheTime,
+      channelName: sources[item.source].name,
+      url: item.url,
+    }))
+
     return {
       status: "success",
       data: {
-        total: sortedNews.length,
+        total: resultItems.length,
         startTime,
         endTime: now,
-        items: sortedNews,
+        items: resultItems,
       },
     }
   } catch (error) {
